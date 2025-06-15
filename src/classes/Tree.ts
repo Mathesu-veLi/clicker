@@ -1,6 +1,8 @@
 import treeImage from "../assets/tree.png";
 
 export class Tree {
+  private static MAX_SIZE = 100;
+
   private element: HTMLImageElement;
   private size: number;
 
@@ -24,8 +26,20 @@ export class Tree {
     this.element.style.height = `${this.size}px`;
   }
 
+  public static getMaxSize() {
+    return Tree.MAX_SIZE;
+  }
+
+  public static upgradeMaxSize() {
+    Tree.MAX_SIZE += 50;
+  }
+
+  public destroy() {
+    this.element.remove();
+  }
+
   private static getRandomPosition(): number {
-    return Math.random() * (window.innerWidth - 100);
+    return Math.random() * (window.innerWidth - Tree.MAX_SIZE);
   }
 
   public grow() {

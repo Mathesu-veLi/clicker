@@ -4,8 +4,10 @@ import { Tree } from "./classes/Tree";
 
 function App() {
   let treesLimit = 10;
+  let replantLevel = 1;
 
   const [coins, setCoins] = useState(0);
+
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -14,7 +16,7 @@ function App() {
 
     if (lastTree.getSize() !== 100) {
       lastTree.grow();
-      setCoins(coins + 1);
+      setCoins(coins + replantLevel);
       return;
     }
 
