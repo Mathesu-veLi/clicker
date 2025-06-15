@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./App.css";
 import { Tree } from "./classes/Tree";
 
@@ -7,20 +7,26 @@ function App() {
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const treeContainer = document.getElementById("tree-container");
+  const addTree = () => {
+    if (containerRef.current) {
+      const newTree = new Tree(containerRef.current);
+      treesRef.current.push(newTree);
+    }
+  };
 
   const handleClick = () => {
-    setScore(score + 1);
-
-    if (!treeContainer) {
+    if (treesRef.current[treesRef.current.length - 1].getSize() === 100) {
+      addTree();
       return;
     }
-
-    const newTree = new Tree(treeContainer);
-    treesRef.current.push(newTree);
-
-    console.log(treesRef.current);
+    treesRef.current[treesRef.current.length - 1].grow();
+    setScore(score + 1);
   };
+
+  useEffect(() => {
+    addTree();
+    setScore(score + 1);
+  }, []);
 
   return (
     <>

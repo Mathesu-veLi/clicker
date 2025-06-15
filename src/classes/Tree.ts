@@ -4,7 +4,7 @@ export class Tree {
   private element: HTMLImageElement;
   private size: number;
 
-  constructor(container: HTMLElement) {
+  constructor(container: HTMLElement | null) {
     this.size = 50;
 
     this.element = document.createElement("img");
@@ -13,7 +13,11 @@ export class Tree {
     this.element.style.left = `${Tree.getRandomPosition()}px`;
     this.updateSize();
 
-    container.appendChild(this.element);
+    container?.appendChild(this.element);
+  }
+
+  public getSize() {
+    return this.size;
   }
 
   private updateSize() {
@@ -21,6 +25,11 @@ export class Tree {
   }
 
   private static getRandomPosition(): number {
-    return Math.random() * window.innerWidth;
+    return Math.random() * (window.innerWidth - 100);
+  }
+
+  public grow() {
+    this.size += 10;
+    this.updateSize();
   }
 }
