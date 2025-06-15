@@ -1,23 +1,25 @@
-import { useState } from "react";
-import tree from "./assets/tree.png";
+import { useState, useRef } from "react";
 import "./App.css";
+import { Tree } from "./classes/Tree";
 
 function App() {
   const [score, setScore] = useState(0);
-  const [trees, setTrees] = useState(0);
+  const treesRef = useRef<Tree[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const treeContainer = document.getElementById("tree-container");
 
   const handleClick = () => {
     setScore(score + 1);
-    setTrees(trees + 1);
 
-    const newTree = document.createElement("img");
-    newTree.src = tree;
-    newTree.className = "absolute h-16 tree";
+    if (!treeContainer) {
+      return;
+    }
 
-    const randomX = Math.random() * window.innerWidth;
-    newTree.style.left = `${randomX}px`;
+    const newTree = new Tree(treeContainer);
+    treesRef.current.push(newTree);
 
-    document.getElementById("tree-container")?.appendChild(newTree);
+    console.log(treesRef.current);
   };
 
   return (
@@ -32,6 +34,7 @@ function App() {
 
       <div
         id="tree-container"
+        ref={containerRef}
         className="fixed inset-0 pointer-events-none"
       ></div>
 
