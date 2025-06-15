@@ -5,8 +5,7 @@ import { Tree } from "./classes/Tree";
 function App() {
   let treesLimit = 10;
 
-  const [score, setScore] = useState(0);
-  const [level, setLevel] = useState(1);
+  const [coins, setCoins] = useState(0);
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -15,11 +14,11 @@ function App() {
 
     if (lastTree.getSize() !== 100) {
       lastTree.grow();
-      setScore(score + 1);
+      setCoins(coins + 1);
       return;
     }
 
-    if (treesRef.current.length === treesLimit) levelUp();
+    if (treesRef.current.length === treesLimit) resetTrees();
 
     addTree();
   };
@@ -31,14 +30,6 @@ function App() {
     }
   };
 
-  const levelUp = () => {
-    resetTrees();
-
-    Tree.upgradeMaxSize();
-    treesLimit += 5;
-    setLevel(level + 1);
-  };
-
   const resetTrees = () => {
     treesRef.current.forEach((tree) => {
       tree.destroy();
@@ -47,8 +38,10 @@ function App() {
   };
 
   useEffect(() => {
-    addTree();
-    setScore(score + 1);
+    if (coins === 0) {
+      addTree();
+      setCoins(coins + 1);
+    }
   }, []);
 
   return (
@@ -57,11 +50,12 @@ function App() {
         <button className="w-full h-full" onClick={handleClick}></button>
       </div>
 
-      <h1 className="text-4xl font-bold absolute top-5 right-10">
-        Score: {score}
+      <p className="text-lime-300 font-light text-4xl absolute top-5 right-10">
+        Coins: {coins}
         <br />
-        Level: {level}
-      </h1>
+        Trees: {treesRef.current.length} ({treesLimit - treesRef.current.length}{" "}
+        left)
+      </p>
 
       <div
         id="tree-container"
