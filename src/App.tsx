@@ -3,9 +3,26 @@ import "./App.css";
 import { Tree } from "./classes/Tree";
 
 function App() {
+  let treesLimit = 10;
+
   const [score, setScore] = useState(0);
+  const [level, setLevel] = useState(1);
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleClick = () => {
+    const lastTree = treesRef.current[treesRef.current.length - 1];
+
+    if (lastTree.getSize() !== 100) {
+      lastTree.grow();
+      setScore(score + 1);
+      return;
+    }
+
+    if (treesRef.current.length === treesLimit) levelUp();
+
+    addTree();
+  };
 
   const addTree = () => {
     if (containerRef.current) {
@@ -14,13 +31,19 @@ function App() {
     }
   };
 
-  const handleClick = () => {
-    if (treesRef.current[treesRef.current.length - 1].getSize() === 100) {
-      addTree();
-      return;
-    }
-    treesRef.current[treesRef.current.length - 1].grow();
-    setScore(score + 1);
+  const levelUp = () => {
+    resetTrees();
+
+    Tree.upgradeMaxSize();
+    treesLimit += 5;
+    setLevel(level + 1);
+  };
+
+  const resetTrees = () => {
+    treesRef.current.forEach((tree) => {
+      tree.destroy();
+    });
+    treesRef.current = [];
   };
 
   useEffect(() => {
@@ -36,6 +59,8 @@ function App() {
 
       <h1 className="text-4xl font-bold absolute top-5 right-10">
         Score: {score}
+        <br />
+        Level: {level}
       </h1>
 
       <div
