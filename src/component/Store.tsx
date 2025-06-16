@@ -12,7 +12,6 @@ export default function Store() {
 
   return (
     <>
-      {/* Botão de abrir loja */}
       <button
         className="z-40 mt-5 left-5 p-2 bg-black rounded shadow fixed"
         onClick={() => setIsOpen(!isOpen)}
@@ -20,12 +19,11 @@ export default function Store() {
         <BiStore size={50} />
       </button>
 
-      {/* Janela da loja */}
       <div
         className={`fixed top-0 left-0 h-full bg-gray-700 shadow-lg transition-transform duration-300 ease-in-out z-50`}
         style={{
-          width: "80%", // mais largo no mobile
-          maxWidth: "300px", // não passa disso no desktop
+          width: "80%",
+          maxWidth: "300px",
           transform: isOpen ? "translateX(0)" : "translateX(-100%)",
         }}
       >
@@ -36,7 +34,7 @@ export default function Store() {
             label="Replant per click"
             level={replantLevel}
             initialPrice={1}
-            increaseConstant={9}
+            increaseConstant={5}
             onClick={() => {
               addReplantLevel();
             }}
@@ -46,7 +44,7 @@ export default function Store() {
             label="Auto-plant"
             level={autoLevel}
             initialPrice={100}
-            increaseConstant={12}
+            increaseConstant={8}
             onClick={() => {
               addAutoLevel();
             }}
@@ -54,7 +52,6 @@ export default function Store() {
         </div>
       </div>
 
-      {/* Overlay ao fundo para fechar clicando fora */}
       {isOpen && (
         <div
           className="fixed inset-0 z-40"
