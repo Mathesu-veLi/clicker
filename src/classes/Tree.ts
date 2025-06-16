@@ -7,6 +7,7 @@ export class Tree {
   private element: HTMLImageElement;
   private label: HTMLDivElement;
   private size: number;
+  private static slots: number[] = [];
 
   constructor(container: HTMLElement | null) {
     this.size = 50;
@@ -54,11 +55,21 @@ export class Tree {
     this.wrapper.remove();
   }
 
+  private static initSlots() {
+    const slotWidth = Tree.MAX_SIZE;
+    Tree.slots = [];
+    for (let x = 0; x < window.innerWidth - slotWidth; x += slotWidth) {
+      Tree.slots.push(x);
+    }
+  }
+
   private static getRandomPosition(): number {
-    const margin = 50;
-    return (
-      Math.random() * (window.innerWidth - Tree.MAX_SIZE - margin) + margin / 2
-    );
+    if (Tree.slots.length === 0) Tree.initSlots();
+
+    const index = Math.floor(Math.random() * Tree.slots.length);
+    const pos = Tree.slots.splice(index, 1)[0];
+
+    return pos;
   }
 
   public grow(replantLevel: number) {
