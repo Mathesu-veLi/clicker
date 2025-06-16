@@ -42,8 +42,9 @@ export class Tree {
     return Math.random() * (window.innerWidth - Tree.MAX_SIZE);
   }
 
-  public grow() {
-    this.size += 10;
+  public grow(replantLevel: number) {
+    this.size += 10 + replantLevel;
+    if (this.size > Tree.getMaxSize()) this.size = Tree.getMaxSize();
     this.updateSize();
   }
 }

@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import "./App.css";
 import { Tree } from "./classes/Tree";
+import Store from "./component/Store";
 import useGameStore from "./stores/setGameStore";
 
 function App() {
@@ -13,8 +14,8 @@ function App() {
 
   const handleClick = () => {
     const lastTree = treesRef.current[treesRef.current.length - 1];
-    if (lastTree.getSize() !== Tree.getMaxSize()) {
-      lastTree.grow();
+    if (lastTree.getSize() < Tree.getMaxSize()) {
+      lastTree.grow(gameStore.replantLevel);
       gameStore.addCoins();
       return;
     }
@@ -41,7 +42,7 @@ function App() {
   useEffect(() => {
     if (treesRef.current.length === 0) {
       addTree();
-      
+
       gameStore.addCoins();
       console.log(gameStore.coins);
       return;
@@ -51,7 +52,7 @@ function App() {
   return (
     <>
       <div className="fixed inset-0" onClick={handleClick}>
-        <button className="w-full h-full" onClick={handleClick}></button>
+        <Store />
       </div>
 
       <p className="text-lime-300 font-light text-4xl absolute top-5 right-10">
