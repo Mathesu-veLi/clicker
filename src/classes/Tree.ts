@@ -7,7 +7,7 @@ export class Tree {
   private element: HTMLImageElement;
   private label: HTMLDivElement;
   private size: number;
-  private static slots: number[] = [];
+  private static usedPositions: number[] = [];
 
   constructor(container: HTMLElement | null) {
     this.size = 50;
@@ -55,20 +55,19 @@ export class Tree {
     this.wrapper.remove();
   }
 
-  private static initSlots() {
-    const slotWidth = Tree.MAX_SIZE;
-    Tree.slots = [];
-    for (let x = 0; x < window.innerWidth - slotWidth; x += slotWidth) {
-      Tree.slots.push(x);
-    }
-  }
-
   private static getRandomPosition(): number {
-    if (Tree.slots.length === 0) Tree.initSlots();
+    const padding = 50; // distância mínima entre árvores
+    let pos: number;
+    let tries = 0;
 
-    const index = Math.floor(Math.random() * Tree.slots.length);
-    const pos = Tree.slots.splice(index, 1)[0];
+    do {
+      pos = Math.random() * (window.innerWidth - Tree.MAX_SIZE);
+      tries++;
+      // Limite de tentativas pra evitar loop infinito caso fique difícil encontrar espaço
+      if (tries > 20) break;
+    } while (Tree.usedPositions.some((p) => Math.abs(p - pos) < padding));
 
+    Tree.usedPositions.push(pos);
     return pos;
   }
 
