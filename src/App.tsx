@@ -11,7 +11,7 @@ function App() {
   const treesStock = Math.floor(
     INITIAL_TREES_STOCK * (1 + 0.2 * (gameStore.treeStockLevel - 1))
   );
-  
+
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -59,10 +59,12 @@ function App() {
   }, [gameStore.autoLevel, gameStore.replantLevel]);
 
   useEffect(() => {
+    Tree.resetMaxSize();
     if (gameStore.maxSizeLevel > 1) {
       Tree.setMaxSize(
-        Math.floor(Tree.getMaxSize() * (1 + 0.2 * gameStore.maxSizeLevel - 1))
+        Math.floor(Tree.getMaxSize() * (1 + 0.2 * gameStore.maxSizeLevel))
       );
+      console.log(Tree.getMaxSize());
     }
   }, [gameStore.maxSizeLevel]);
 
