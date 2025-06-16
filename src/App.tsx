@@ -50,11 +50,9 @@ function App() {
       const interval = setInterval(() => {
         handleClick();
       }, 10000 / gameStore.autoLevel);
-
-
       return () => clearInterval(interval);
     }
-  }, [gameStore.autoLevel]);
+  }, [gameStore.autoLevel, gameStore.replantLevel]);
 
   return (
     <>
