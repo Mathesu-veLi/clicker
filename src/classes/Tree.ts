@@ -56,14 +56,13 @@ export class Tree {
   }
 
   private static getRandomPosition(): number {
-    const padding = 50; // distância mínima entre árvores
+    const padding = 50;
     let pos: number;
     let tries = 0;
 
     do {
       pos = Math.random() * (window.innerWidth - Tree.MAX_SIZE);
       tries++;
-      // Limite de tentativas pra evitar loop infinito caso fique difícil encontrar espaço
       if (tries > 20) break;
     } while (Tree.usedPositions.some((p) => Math.abs(p - pos) < padding));
 
