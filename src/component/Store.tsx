@@ -3,10 +3,17 @@ import { BiPlus, BiStore } from "react-icons/bi";
 import { MdLoop } from "react-icons/md";
 import Upgrade from "./Upgrade";
 import useGameStore from "../stores/setGameStore";
+import { PiCursorClick } from "react-icons/pi";
 
 export default function Store() {
-  const { replantLevel, addReplantLevel, addAutoLevel, autoLevel } =
-    useGameStore();
+  const {
+    replantLevel,
+    autoLevel,
+    treeStockLevel,
+    increaseReplantLevel,
+    increaseAutoLevel,
+    increaseTreeStockLevel,
+  } = useGameStore();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,15 +37,27 @@ export default function Store() {
         <h2 className="p-4 text-xl font-bold">Loja</h2>
         <div className="p-4 flex flex-col gap-10">
           <Upgrade
-            icon={<BiPlus size={50} />}
+            icon={<PiCursorClick size={50} />}
             label="Replant per click"
             level={replantLevel}
             initialPrice={1}
             increaseConstant={5}
             onClick={() => {
-              addReplantLevel();
+              increaseReplantLevel();
             }}
           />
+
+          <Upgrade
+            icon={<BiPlus size={50} />}
+            label="Trees stock"
+            level={treeStockLevel}
+            initialPrice={25}
+            increaseConstant={6}
+            onClick={() => {
+              increaseTreeStockLevel();
+            }}
+          />
+
           <Upgrade
             icon={<MdLoop size={50} />}
             label="Auto-plant"
@@ -46,7 +65,7 @@ export default function Store() {
             initialPrice={100}
             increaseConstant={8}
             onClick={() => {
-              addAutoLevel();
+              increaseAutoLevel();
             }}
           />
         </div>
