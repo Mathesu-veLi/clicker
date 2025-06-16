@@ -47,8 +47,12 @@ export class Tree {
     return Tree.MAX_SIZE;
   }
 
-  public static upgradeMaxSize() {
-    Tree.MAX_SIZE += 50;
+  public static setMaxSize(amount: number) {
+    Tree.MAX_SIZE += amount;
+  }
+
+  public static resetMaxSize() {
+    Tree.MAX_SIZE = 100;
   }
 
   public destroy() {

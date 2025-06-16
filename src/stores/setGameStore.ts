@@ -6,11 +6,13 @@ interface GameState {
   replantLevel: number;
   autoLevel: number;
   treeStockLevel: number;
+  maxSizeLevel: number;
   addCoins: () => void;
   removeCoins: (amount: number) => void;
   increaseReplantLevel: () => void;
   increaseAutoLevel: () => void;
   increaseTreeStockLevel: () => void;
+  increaseMaxSizeLevel: () => void;
 }
 
 const useGameStore = create<GameState>()(
@@ -19,6 +21,7 @@ const useGameStore = create<GameState>()(
       coins: 0,
       replantLevel: 1,
       treeStockLevel: 1,
+      maxSizeLevel: 1,
       autoLevel: 0,
       addCoins: () =>
         set((state) => ({ coins: state.coins + state.replantLevel })),
@@ -30,6 +33,8 @@ const useGameStore = create<GameState>()(
         set((state) => ({ autoLevel: state.autoLevel + 1 })),
       increaseTreeStockLevel: () =>
         set((state) => ({ treeStockLevel: state.treeStockLevel + 1 })),
+      increaseMaxSizeLevel: () => 
+        set((state) => ({ maxSizeLevel: state.maxSizeLevel + 1 })),
     }),
     {
       name: "game-storage", // nome da chave no localStorage

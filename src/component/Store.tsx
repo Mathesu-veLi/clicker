@@ -10,9 +10,11 @@ export default function Store() {
     replantLevel,
     autoLevel,
     treeStockLevel,
+    maxSizeLevel,
     increaseReplantLevel,
     increaseAutoLevel,
     increaseTreeStockLevel,
+    increaseMaxSizeLevel,
   } = useGameStore();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -55,6 +57,17 @@ export default function Store() {
             increaseConstant={6}
             onClick={() => {
               increaseTreeStockLevel();
+            }}
+          />
+
+          <Upgrade
+            icon={<BiPlus size={50} />}
+            label="Tree size"
+            level={maxSizeLevel}
+            initialPrice={50}
+            increaseConstant={7}
+            onClick={() => {
+              increaseMaxSizeLevel();
             }}
           />
 

@@ -56,6 +56,11 @@ function App() {
     }
   }, [gameStore.autoLevel, gameStore.replantLevel]);
 
+  useEffect(() => {
+    Tree.setMaxSize(Math.round(Tree.getMaxSize() * (gameStore.maxSizeLevel / 1)));
+    console.log(Math.round(Tree.getMaxSize() * (gameStore.maxSizeLevel / 1)));
+  }, [gameStore.maxSizeLevel]);
+
   return (
     <>
       <div className="fixed inset-0 z-0" onClick={handleClick}></div>
