@@ -12,9 +12,10 @@
 }
 
 .tree {
-  bottom: 1rem;
   z-index: 20;
 }
+
+
 
 @keyframes logo-spin {
   from {

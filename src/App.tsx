@@ -45,6 +45,17 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (gameStore.autoLevel > 0) {
+      const interval = setInterval(() => {
+        handleClick();
+      }, 10000 / gameStore.autoLevel);
+
+
+      return () => clearInterval(interval);
+    }
+  }, [gameStore.autoLevel]);
+
   return (
     <>
       <div className="fixed inset-0 z-0" onClick={handleClick}></div>
