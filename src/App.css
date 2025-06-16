@@ -15,27 +15,11 @@
   z-index: 20;
 }
 
-
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes flash {
+  0%, 100% { background-color: #6A6; }
+  25%, 75% { background-color: #f87171; }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.animate-flash {
+  animation: flash 1s ease-in-out 2;
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ReactNode } from "react";
 import useGameStore from "../stores/setGameStore";
 
@@ -26,6 +27,8 @@ export default function Upgrade({
 
   const { coins, removeCoins } = useGameStore();
 
+  const [isError, setIsError] = useState(false);
+
   const handleClick = () => {
     if (coins >= price()) {
       removeCoins(price());
@@ -33,11 +36,15 @@ export default function Upgrade({
       return;
     }
 
-    alert("Você não tem dinheiro suficiente");
+    // Inicia o efeito de piscar
+    setIsError(true);
+    setTimeout(() => setIsError(false), 400); // duração do piscar (2x)
   };
+
   return (
     <button
-      className="flex flex-col items-center gap-4 border-4 border-solid border-black bg-[#6A6] p-4 rounded shadow z-50"
+      className={`flex flex-col items-center gap-4 border-4 border-solid border-black bg-[#6A6] p-4 rounded shadow z-50 transition-all duration-200 
+      ${isError ? "animate-flash border-red-500" : ""}`}
       onClick={handleClick}
     >
       {icon}
