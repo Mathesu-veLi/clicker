@@ -15,6 +15,7 @@ export default function Store() {
     increaseAutoLevel,
     increaseTreeStockLevel,
     increaseMaxSizeLevel,
+    resetUpgrades,
   } = useGameStore();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -81,6 +82,15 @@ export default function Store() {
               increaseAutoLevel();
             }}
           />
+
+          <button
+            className="bg-black text-white p-2 rounded"
+            onClick={() => {
+              resetUpgrades();
+            }}
+          >
+            Reset Upgrades
+          </button>
         </div>
       </div>
 

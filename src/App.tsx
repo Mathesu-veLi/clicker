@@ -8,8 +8,10 @@ function App() {
   const INITIAL_TREES_STOCK = 10;
 
   const gameStore = useGameStore();
-  const treesStock = Math.round((gameStore.treeStockLevel / 1.5) * INITIAL_TREES_STOCK);
-
+  const treesStock = Math.floor(
+    INITIAL_TREES_STOCK * (1 + 0.2 * (gameStore.treeStockLevel - 1))
+  );
+  
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +41,6 @@ function App() {
     });
     treesRef.current = [];
   };
-
   useEffect(() => {
     if (treesRef.current.length === 0) {
       addTree();
@@ -52,13 +53,17 @@ function App() {
       const interval = setInterval(() => {
         handleClick();
       }, 10000 / gameStore.autoLevel);
+
       return () => clearInterval(interval);
     }
   }, [gameStore.autoLevel, gameStore.replantLevel]);
 
   useEffect(() => {
-    Tree.setMaxSize(Math.round(Tree.getMaxSize() * (gameStore.maxSizeLevel / 1)));
-    console.log(Math.round(Tree.getMaxSize() * (gameStore.maxSizeLevel / 1)));
+    if (gameStore.maxSizeLevel > 1) {
+      Tree.setMaxSize(
+        Math.floor(Tree.getMaxSize() * (1 + 0.2 * gameStore.maxSizeLevel - 1))
+      );
+    }
   }, [gameStore.maxSizeLevel]);
 
   return (
@@ -70,8 +75,8 @@ function App() {
       <p className="text-lime-300 font-light text-4xl absolute top-5 right-10 z-20">
         Coins: {gameStore.coins}
         <br />
-        Trees: {treesRef.current.length} ({Math.round(treesStock - treesRef.current.length)}{" "}
-        left)
+        Trees: {treesRef.current.length} (
+        {Math.round(treesStock - treesRef.current.length)} left)
       </p>
 
       <div

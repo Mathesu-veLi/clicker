@@ -13,6 +13,7 @@ interface GameState {
   increaseAutoLevel: () => void;
   increaseTreeStockLevel: () => void;
   increaseMaxSizeLevel: () => void;
+  resetUpgrades: () => void;
 }
 
 const useGameStore = create<GameState>()(
@@ -33,11 +34,19 @@ const useGameStore = create<GameState>()(
         set((state) => ({ autoLevel: state.autoLevel + 1 })),
       increaseTreeStockLevel: () =>
         set((state) => ({ treeStockLevel: state.treeStockLevel + 1 })),
-      increaseMaxSizeLevel: () => 
+      increaseMaxSizeLevel: () =>
         set((state) => ({ maxSizeLevel: state.maxSizeLevel + 1 })),
+      resetUpgrades: () =>
+        set(() => ({
+          replantLevel: 1,
+          autoLevel: 0,
+          treeStockLevel: 1,
+          maxSizeLevel: 1
+        })),
     }),
+
     {
-      name: "game-storage", // nome da chave no localStorage
+      name: "game-storage",
     }
   )
 );

@@ -36,9 +36,8 @@ export default function Upgrade({
       return;
     }
 
-    // Inicia o efeito de piscar
     setIsError(true);
-    setTimeout(() => setIsError(false), 400); // duração do piscar (2x)
+    setTimeout(() => setIsError(false), 400);
   };
 
   return (
