@@ -3,19 +3,34 @@ import treeImage from "../assets/tree.png";
 export class Tree {
   private static MAX_SIZE = 100;
 
+  private wrapper: HTMLDivElement;
   private element: HTMLImageElement;
+  private label: HTMLDivElement;
   private size: number;
 
   constructor(container: HTMLElement | null) {
     this.size = 50;
 
+    this.wrapper = document.createElement("div");
+    this.wrapper.className = "absolute flex flex-col items-center";
+
+    this.label = document.createElement("div");
+    this.label.className = "text-white text-sm font-bold mb-1";
+    this.label.innerText = `${this.size}`;
+
     this.element = document.createElement("img");
     this.element.src = treeImage;
-    this.element.className = "absolute tree";
-    this.element.style.left = `${Tree.getRandomPosition()}px`;
-    this.updateSize();
+    this.element.className = "tree";
 
-    container?.appendChild(this.element);
+    this.wrapper.style.left = `${Tree.getRandomPosition()}px`;
+    this.wrapper.style.bottom = `15px`;
+
+    this.wrapper.appendChild(this.label);
+    this.wrapper.appendChild(this.element);
+
+    container?.appendChild(this.wrapper);
+
+    this.updateSize();
   }
 
   public getSize() {
@@ -24,6 +39,7 @@ export class Tree {
 
   private updateSize() {
     this.element.style.height = `${this.size}px`;
+    this.label.innerText = `${this.size}`;
   }
 
   public static getMaxSize() {
@@ -35,11 +51,14 @@ export class Tree {
   }
 
   public destroy() {
-    this.element.remove();
+    this.wrapper.remove();
   }
 
   private static getRandomPosition(): number {
-    return Math.random() * (window.innerWidth - Tree.MAX_SIZE);
+    const margin = 50;
+    return (
+      Math.random() * (window.innerWidth - Tree.MAX_SIZE - margin) + margin / 2
+    );
   }
 
   public grow(replantLevel: number) {
