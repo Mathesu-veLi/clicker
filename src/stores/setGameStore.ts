@@ -29,7 +29,7 @@ const useGameStore = create<GameState>()(
       increaseAutoLevel: () =>
         set((state) => ({ autoLevel: state.autoLevel + 1 })),
       increaseTreeStockLevel: () =>
-        set((state) => ({ treeStockLevel: state.treeStockLevel * 1.5 })),
+        set((state) => ({ treeStockLevel: state.treeStockLevel * 1.2 })),
     }),
     {
       name: "game-storage", // nome da chave no localStorage

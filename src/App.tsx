@@ -9,6 +9,7 @@ function App() {
 
   const gameStore = useGameStore();
   const treesStock = gameStore.treeStockLevel * INITIAL_TREES_STOCK;
+  console.log(treesStock, gameStore.treeStockLevel);
 
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,7 +21,7 @@ function App() {
       gameStore.addCoins();
       return;
     }
-    
+
     if (treesRef.current.length >= treesStock) resetTrees();
 
     addTree();
@@ -65,7 +66,7 @@ function App() {
       <p className="text-lime-300 font-light text-4xl absolute top-5 right-10 z-20">
         Coins: {gameStore.coins}
         <br />
-        Trees: {treesRef.current.length} ({treesStock - treesRef.current.length}{" "}
+        Trees: {treesRef.current.length} ({Math.round(treesStock - treesRef.current.length)}{" "}
         left)
       </p>
 
