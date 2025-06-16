@@ -1,22 +1,21 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import "./App.css";
 import { Tree } from "./classes/Tree";
+import useGameStore from "./stores/setGameStore";
 
 function App() {
-  let treesLimit = 10;
-  let replantLevel = 1;
+  const gameStore = useGameStore();
 
-  const [coins, setCoins] = useState(0);
+  const treesLimit = gameStore.treeLimit;
 
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleClick = () => {
     const lastTree = treesRef.current[treesRef.current.length - 1];
-
-    if (lastTree.getSize() !== 100) {
+    if (lastTree.getSize() !== Tree.getMaxSize()) {
       lastTree.grow();
-      setCoins(coins + replantLevel);
+      gameStore.addCoins();
       return;
     }
 
@@ -40,20 +39,23 @@ function App() {
   };
 
   useEffect(() => {
-    if (coins === 0) {
+    if (treesRef.current.length === 0) {
       addTree();
-      setCoins(coins + 1);
+      
+      gameStore.addCoins();
+      console.log(gameStore.coins);
+      return;
     }
   }, []);
 
   return (
     <>
-      <div className="fixed inset-0">
+      <div className="fixed inset-0" onClick={handleClick}>
         <button className="w-full h-full" onClick={handleClick}></button>
       </div>
 
       <p className="text-lime-300 font-light text-4xl absolute top-5 right-10">
-        Coins: {coins}
+        Coins: {gameStore.coins}
         <br />
         Trees: {treesRef.current.length} ({treesLimit - treesRef.current.length}{" "}
         left)
@@ -62,7 +64,7 @@ function App() {
       <div
         id="tree-container"
         ref={containerRef}
-        className="fixed inset-0 pointer-events-none"
+        className="fixed inset-0 pointer-events-none z-10"
       ></div>
 
       <div
