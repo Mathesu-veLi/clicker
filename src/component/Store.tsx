@@ -5,7 +5,8 @@ import Upgrade from "./Upgrade";
 import useGameStore from "../stores/setGameStore";
 
 export default function Store() {
-  const { replantLevel, addReplantLevel, addAutoLevel, autoLevel } = useGameStore();
+  const { replantLevel, addReplantLevel, addAutoLevel, autoLevel } =
+    useGameStore();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,6 +33,8 @@ export default function Store() {
             icon={<BiPlus size={50} />}
             label="Replant per click"
             level={replantLevel}
+            initialPrice={1}
+            increaseConstant={9}
             onClick={() => {
               addReplantLevel();
             }}
@@ -40,6 +43,8 @@ export default function Store() {
             icon={<MdLoop size={50} />}
             label="Auto-plant"
             level={autoLevel}
+            initialPrice={100}
+            increaseConstant={12}
             onClick={() => {
               addAutoLevel();
             }}

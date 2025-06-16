@@ -6,6 +6,7 @@ interface GameState {
   replantLevel: number;
   autoLevel: number
   addCoins: () => void;
+  removeCoins: (amount: number) => void;
   addReplantLevel: () => void;
   addAutoLevel: () => void;
   treeLimit: number;
@@ -20,6 +21,8 @@ const useGameStore = create<GameState>()(
       autoLevel: 0,
       addCoins: () =>
         set((state) => ({ coins: state.coins + state.replantLevel })),
+      removeCoins: (amount: number) =>
+        set((state) => ({ coins: state.coins - amount })),
       addReplantLevel: () =>
         set((state) => ({ replantLevel: state.replantLevel + 1 })),
       addAutoLevel: () =>
