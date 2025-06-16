@@ -8,8 +8,7 @@ function App() {
   const INITIAL_TREES_STOCK = 10;
 
   const gameStore = useGameStore();
-  const treesStock = gameStore.treeStockLevel * INITIAL_TREES_STOCK;
-  console.log(treesStock, gameStore.treeStockLevel);
+  const treesStock = Math.round((gameStore.treeStockLevel / 1.5) * INITIAL_TREES_STOCK);
 
   const treesRef = useRef<Tree[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
