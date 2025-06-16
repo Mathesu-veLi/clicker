@@ -5,7 +5,7 @@ import Upgrade from "./Upgrade";
 import useGameStore from "../stores/setGameStore";
 
 export default function Store() {
-  const { replantLevel, addReplantLevel } = useGameStore();
+  const { replantLevel, addReplantLevel, addAutoLevel, autoLevel } = useGameStore();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,8 +39,9 @@ export default function Store() {
           <Upgrade
             icon={<MdLoop size={50} />}
             label="Auto-plant"
+            level={autoLevel}
             onClick={() => {
-              alert("Auto-plant purchased!");
+              addAutoLevel();
             }}
           />
         </div>
