@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 .tree {
   bottom: 1rem;
   z-index: 20;

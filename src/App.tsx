@@ -6,7 +6,6 @@ import useGameStore from "./stores/setGameStore";
 
 function App() {
   const gameStore = useGameStore();
-
   const treesLimit = gameStore.treeLimit;
 
   const treesRef = useRef<Tree[]>([]);
@@ -42,20 +41,17 @@ function App() {
   useEffect(() => {
     if (treesRef.current.length === 0) {
       addTree();
-
       gameStore.addCoins();
-      console.log(gameStore.coins);
-      return;
     }
   }, []);
 
   return (
     <>
-      <div className="fixed inset-0" onClick={handleClick}>
-        <Store />
-      </div>
+      <div className="fixed inset-0 z-0" onClick={handleClick}></div>
 
-      <p className="text-lime-300 font-light text-4xl absolute top-5 right-10">
+      <Store />
+
+      <p className="text-lime-300 font-light text-4xl absolute top-5 right-10 z-20">
         Coins: {gameStore.coins}
         <br />
         Trees: {treesRef.current.length} ({treesLimit - treesRef.current.length}{" "}
@@ -70,7 +66,7 @@ function App() {
 
       <div
         id="floor"
-        className="w-full bg-green-500 h-4 fixed bottom-0 left-0 flex items-center justify-center"
+        className="w-full bg-green-500 h-4 fixed bottom-0 left-0 flex items-center justify-center z-10"
       ></div>
     </>
   );
